@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?scenebuilder-background-color 0x9c9999ff?>
+<?scenebuilder-stylesheet application.css?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="657.0" snapToPixel="false" style="" styleClass=", title" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.limetray.assignement.Conttroler.ItemsController">
+  <children>
+    <Accordion prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <expandedPane>
+        <TitledPane fx:id="x6" animated="true" collapsible="false" expanded="true" text="ADD YOUR ITEMS DETAIL" textFill="$x3">
+          <content>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <GridPane id="GridPane" alignment="CENTER" gridLinesVisible="false" hgap="5.0" layoutX="29.0" layoutY="44.0" vgap="5.0">
+                  <children>
+                    <Label prefHeight="20.9609375" prefWidth="100.0" text="Coke/Pepsi" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                      <font>
+                        <Font name="System Bold" size="14.0" fx:id="x1" />
+                      </font>
+                      <textFill>
+                        <Color blue="0.400" green="0.352" red="0.000" fx:id="x3" />
+                      </textFill>
+                    </Label>
+                    <Label font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="Tea/Coffie" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                      <textFill>
+                        <Color blue="0.400" green="0.353" red="0.000" fx:id="x2" />
+                      </textFill>
+                    </Label>
+                    <Label font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="Pizza" textFill="$x2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="Burger" textFill="$x2" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="Choclate" textFill="$x2" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <TextField fx:id="cokeText" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <TextField fx:id="teaText" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <TextField fx:id="pizzaText" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <TextField fx:id="burgerText" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                    <TextField fx:id="choText" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                    <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                      <children>
+                        <Button fx:id="submitText" mnemonicParsing="false" onAction="#saveItems" prefWidth="62.0" text="Save" textFill="$x3">
+                          <font>
+                            <Font name="System Bold" size="13.0" fx:id="x4" />
+                          </font>
+                          <HBox.margin>
+                            <Insets right="30.0" />
+                          </HBox.margin>
+                        </Button>
+                        <Button fx:id="cancelButton" font="$x4" mnemonicParsing="false" onAction="#cancelButton" text="Cancel" textFill="$x2" />
+                      </children>
+                    </HBox>
+                    <Label fx:id="errorLabel" font="$x4" prefWidth="200.0" text="Enter data is not valid" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <Label text="" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <ProgressIndicator fx:id="saveIndicator" minHeight="23.0" prefHeight="33.0" prefWidth="63.0" progress="-0.08" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    <Label font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="No. Of Items" textFill="$x2" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="cokeItems" editable="true" minHeight="17.290903417971276" prefHeight="17.290903417971276" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <Label font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="No. Of Items" textFill="$x2" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                    <ComboBox fx:id="burgaeItems" editable="true" minHeight="17.290903417971276" prefHeight="17.290903417971276" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <Label font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="No. Of Items" textFill="$x2" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                    <ComboBox fx:id="choItems" editable="true" minHeight="17.290903417971276" prefHeight="17.290903417971276" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <Label font="$x1" prefHeight="20.9609375" prefWidth="99.9998779296875" text="No. Of Items" textFill="$x2" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                    <ComboBox fx:id="teaItems" editable="true" minHeight="17.290903417971276" prefHeight="17.290903417971276" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <Label font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="No. Of Items" textFill="$x2" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                    <ComboBox fx:id="pizzaItems" editable="true" minHeight="17.290903417971276" prefHeight="17.290903417971276" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                    <Label font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="Total Items" textFill="$x2" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                    <Label fx:id="totalItems" font="$x1" prefHeight="20.960837500002526" prefWidth="84.9998779296875" text="Total Items" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                    <Label font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="VAT (%)" textFill="$x2" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                    <Label fx:id="vatText" font="$x1" prefHeight="20.960837500002526" prefWidth="71.0" text="20" textFill="RED" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                    <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="Price/Item" textFill="$x2" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+                    <Label fx:id="cokePrice" alignment="CENTER" contentDisplay="RIGHT" font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                      <textFill>
+                        <Color blue="0.000" green="0.000" red="0.800" fx:id="x5" />
+                      </textFill>
+                    </Label>
+                    <Label fx:id="teaPrice" alignment="CENTER" font="$x1" prefHeight="20.960837500002526" prefWidth="88.0" text="" textFill="$x5" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                    <Label fx:id="pizzaPrice" alignment="CENTER" font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="" textFill="$x5" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                    <Label fx:id="burgerPrice" alignment="CENTER" font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="" textFill="$x5" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                    <Label fx:id="choPrice" alignment="CENTER" font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="" textFill="$x5" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                    <HBox prefHeight="23.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                      <children>
+                        <Label font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="Total Price : " textFill="$x2" />
+                        <Label fx:id="totalPrice" font="$x1" prefHeight="20.960837500002526" prefWidth="100.0" text="" textFill="$x2" />
+                      </children>
+                    </HBox>
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+              </children>
+            </Pane>
+          </content>
+          <font>
+            <Font name="System Bold" size="16.0" />
+          </font>
+        </TitledPane>
+      </expandedPane>
+      <panes>
+        <fx:reference source="x6" />
+      </panes>
+    </Accordion>
+  </children>
+</AnchorPane>
