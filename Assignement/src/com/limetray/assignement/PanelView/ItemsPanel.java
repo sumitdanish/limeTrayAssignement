@@ -11,7 +11,7 @@ public class ItemsPanel extends Parent {
 	private Parent  root;
 	
 	public ItemsPanel() throws IOException{
-		root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/itesms1.fxml")); 
+		root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Main.fxml")); 
 		
 	}
 	

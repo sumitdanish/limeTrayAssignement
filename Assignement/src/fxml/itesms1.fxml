@@ -14,7 +14,7 @@
     <Accordion expandedPane="$null" layoutX="124.0" layoutY="53.0" />
     <TitledPane animated="false" collapsible="false" expanded="true" prefHeight="400.0" prefWidth="600.0" text="ADD YOUR ITEMS DETAILS" textFill="#002966" underline="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="182.0" prefWidth="202.0">
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="182.0" prefWidth="202.0" styleClass="table-view, text-field">
           <children>
             <GridPane id="GridPane" hgap="10.0" layoutX="42.0" layoutY="4.0" vgap="10.0">
               <children>
@@ -60,15 +60,11 @@
                     <Font name="System Bold" size="10.0" fx:id="x3" />
                   </font>
                 </Label>
-                <Label alignment="CENTER_RIGHT" font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="Name : " GridPane.columnIndex="0" GridPane.rowIndex="0">
-                  <textFill>
-                    <Color blue="0.400" green="0.353" red="0.000" fx:id="x6" />
-                  </textFill>
-                </Label>
+                <Label alignment="CENTER_RIGHT" font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="Name : " textFill="$x2" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                 <TextField prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Label alignment="CENTER_RIGHT" font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="" textFill="$x6" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                <Label alignment="CENTER_RIGHT" font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="" textFill="$x6" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                <Label alignment="CENTER_RIGHT" font="$x1" prefHeight="21.0" prefWidth="133.0" text="" textFill="$x6" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                <Label alignment="CENTER_RIGHT" font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="" textFill="$x2" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <Label alignment="CENTER_RIGHT" font="$x1" prefHeight="20.9609375" prefWidth="100.0" text="" textFill="$x2" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                <Label alignment="CENTER_RIGHT" font="$x1" prefHeight="21.0" prefWidth="133.0" text="" textFill="$x2" GridPane.columnIndex="4" GridPane.rowIndex="0" />
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />

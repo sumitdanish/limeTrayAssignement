@@ -1,7 +1,6 @@
 package com.limetray.assignement.Conttroler;
 
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -57,6 +56,10 @@ public class ItemsController implements Initializable {
     @FXML
     private Insets x5;
     @FXML
+    private Color x3;
+    @FXML
+    private TextField customerName;
+    @FXML
     private Button cancelOrder;
     @FXML
     private Label successLabel;
@@ -73,6 +76,8 @@ public class ItemsController implements Initializable {
     @FXML
     private Label totalPriceAfterVat;
     @FXML
+    private Label amount;
+    @FXML
     private TableColumn<ItemsBeans, Integer> seqNo;
     @FXML
     private TableColumn<ItemsBeans, String> itemNameCo;
@@ -86,6 +91,8 @@ public class ItemsController implements Initializable {
     private TableColumn<ItemsBeans, String> dateTime;
     @FXML
     private ContextMenu deleteARowFromTable;
+    private double totalCalculatedPricePerOrder;
+    private double totalCalculatedPrice;
     /**
      * Initializes the controller class.
      */
@@ -96,6 +103,8 @@ public class ItemsController implements Initializable {
     ObservableList<ItemsBeans> tableData = FXCollections.observableArrayList();
     private int count = 0;
     private Utilities utilities;
+    private DataPersist persist;
+    private final static String RECORD_FILE_NAME = "customerRecord.properties";
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     	try{
@@ -113,19 +122,33 @@ public class ItemsController implements Initializable {
     private void addDetailAction(ActionEvent event) {
     	String itemName = itemsList.getSelectionModel().getSelectedItem();
     	Integer noOfItems = numberOfItems.getSelectionModel().getSelectedItem(); 
+    	totalCalculatedPricePerOrder = 0.0;
     	if((itemName != null && !itemName.equals("null")) && (noOfItems != null && noOfItems != 0)){
     		count++;
-    		ItemsBeans itemDetail = new ItemsBeans(count, itemName, (double)Double.parseDouble(pricePerItems.getText()), noOfItems, (double)Double.parseDouble(totalPriceAfterVat.getText()),utilities.dateToStringUtil(new Date()));
+    		ItemsBeans itemDetail = new ItemsBeans(count, itemName, (double)Double.parseDouble(pricePerItems.getText()), noOfItems, (double)Double.parseDouble(totalPrice.getText()),utilities.dateToStringUtil(new Date()));
     		tableData.add(itemDetail);
     		itemsDetailsList.setItems(tableData);
-    		
     	}
     	
     }
 
     @FXML
     private void savedItemsAction(ActionEvent event) {
-    	
+    	try{
+    		totalCalculatedPrice = 0.0;
+    		if(totalPriceAfterVat.getText() != null && !totalPriceAfterVat.getText().equals(null)){
+    			calculateVat.setText("VAT Amount : "+utilities.floatToStringConversion((((float)Double.parseDouble(totalPriceAfterVat.getText())*
+						((float)Double.parseDouble(vatVal.getText().substring(vatVal.getText().indexOf(':')+1).trim())))/100)));
+    			totalCalculatedPrice = ((float)Double.parseDouble(totalPriceAfterVat.getText())+
+						((float)Double.parseDouble(calculateVat.getText().substring(calculateVat.getText().indexOf(':')+1).trim())));
+    			amount.setText("Payble : "+utilities.floatToStringConversion(totalCalculatedPrice));
+    		}
+    		ObservableList<ItemsBeans> item = FXCollections.observableArrayList();
+    		item = itemsDetailsList.getItems();
+    		persist.saveData(item, RECORD_FILE_NAME);
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
     }
 
     @FXML
@@ -145,7 +168,7 @@ public class ItemsController implements Initializable {
     				numOfItemList.add(count);
     			}
     			numberOfItems.setItems(numOfItemList);
-    			pricePerItems.setText(floatToStringConversion((float)Double.parseDouble((String)getItemPrice().get(itemName+"ItemPrice"))));
+    			pricePerItems.setText(utilities.floatToStringConversion((float)Double.parseDouble((String)getItemPrice().get(itemName+"ItemPrice"))));
     			numOfItemList = null;
     		}
     	}catch(Exception ex){
@@ -159,13 +182,10 @@ public class ItemsController implements Initializable {
     		String itemName = itemsList.getSelectionModel().getSelectedItem();
     		Integer noOfItems = numberOfItems.getSelectionModel().getSelectedItem(); 
     		if(itemName != null && !itemName.equals("null") && noOfItems != null && noOfItems != 0){
-    			totalPrice.setText(null);
-    			totalPrice.setText(floatToStringConversion(((float)Double.parseDouble(pricePerItems.getText())*noOfItems)));
-    			calculateVat.setText("VAT Amount : "+floatToStringConversion((((float)Double.parseDouble(totalPrice.getText())*
-    														((float)Double.parseDouble(vatVal.getText().substring(vatVal.getText().indexOf(':')+1).trim())))/100)));
-    			totalVatAmount.setText("Total Amount : ");
-    			totalPriceAfterVat.setText(floatToStringConversion(((float)Double.parseDouble(totalPrice.getText())+
-    																((float)Double.parseDouble(calculateVat.getText().substring(calculateVat.getText().indexOf(':')+1).trim()))))); 
+    			totalPrice.setText(utilities.floatToStringConversion((Double.parseDouble(pricePerItems.getText())*noOfItems)));
+    			
+    			totalCalculatedPricePerOrder+=totalPrice.getText() != null ? Double.parseDouble(totalPrice.getText()) : 0.0;
+    			totalPriceAfterVat.setText(utilities.floatToStringConversion(totalCalculatedPricePerOrder));
     		}
     		
     	}catch(Exception ex){
@@ -181,7 +201,6 @@ public class ItemsController implements Initializable {
     		itemList = lruCache.getItemCache();
     		numberOfItem = lruCache.getNumberOfItems();
     		itemPrice = lruCache.getItemPrice();
-    		System.out.print(numberOfItem.keySet()); 
     		setItemList(itemList);
     		setNumberOfItem(numberOfItem);
     	}catch(Exception ex){
@@ -199,28 +218,11 @@ public class ItemsController implements Initializable {
     			listOfItems.add(val);
     		}
     		itemsList.setItems(listOfItems);
-    		vatVal.setText("VAT (%) : "+floatToStringConversion((float)lruCache.getVatValue().get()));
+    		vatVal.setText("VAT (%) : "+utilities.floatToStringConversion((float)lruCache.getVatValue().get()));
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
     }
-    
-    private String floatToStringConversion(double totalPrice){
-    	try{
-    		DecimalFormat df2 = new DecimalFormat("00.00");
-    		float totalPriceInFloat = (float) totalPrice;
-    		String totalPriceFromFloatToString = df2.format(totalPriceInFloat);
-    		totalPriceFromFloatToString = totalPriceFromFloatToString.substring(totalPriceFromFloatToString.indexOf('.')+1).length() == 1?
-    									  (totalPriceFromFloatToString.substring(0,totalPriceFromFloatToString.indexOf('.'))+"."+totalPriceFromFloatToString.substring(totalPriceFromFloatToString.indexOf('.')+1)+String .valueOf('0')):
-    										  totalPriceFromFloatToString;
-    		return totalPriceFromFloatToString;
-    		
-    	}catch(Exception ex){
-    		ex.printStackTrace();
-    	}
-    	return null;
-    }
-    
     
     public void initTableView(){
     	try{
@@ -243,6 +245,9 @@ public class ItemsController implements Initializable {
     	try{
     		
     		itemsDetailsList.getItems().removeAll(itemsDetailsList.getSelectionModel().getSelectedItem());
+    		
+    		
+    		
     		
 //    		int leftItemCount = 0;
     		
