@@ -10,7 +10,7 @@ public class DataPersist {
 	private volatile static DataPersist dataPerist;
 	private FileUtil fileUtil;
 	private DataPersist(){
-		
+		fileUtil = FileUtil.getFileUtil();
 	}
 	public static synchronized DataPersist getDataPersist(){
 		try{
@@ -29,13 +29,20 @@ public class DataPersist {
 	}
 	
 	
-	public void saveData(ObservableList<ItemsBeans> itemsBeans,String fileName){
+	public void saveData(ObservableList<ItemsBeans> itemsBeans,String fileName,String customerName){
 		try{
-			fileUtil.saveRecord(itemsBeans, fileName);
+			fileUtil.saveRecord(itemsBeans, fileName,customerName);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 	}
 	
+	public void updateKey(String fileName,ObservableList<ItemsBeans> items){
+		try{
+			fileUtil.updateKey(fileName,items);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	
 }
