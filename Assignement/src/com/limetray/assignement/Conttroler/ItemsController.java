@@ -48,9 +48,19 @@ import com.limetray.assignement.Util.Utilities;
 /**
  * FXML Controller class
  *
- * @author ADMIN
+ * @author SUMMIT
  */
 public class ItemsController implements Initializable {
+	
+	
+	
+	
+	/*
+	 * 
+	 *	Definition of all the component of the UI  
+	 *  
+	 */
+	
     @FXML
     private Color x2;
     @FXML
@@ -66,8 +76,6 @@ public class ItemsController implements Initializable {
     private Label totalPrice;
     @FXML
     private Button addDetail;
-    @FXML
-    private TableView<ItemsBeans> itemsDetailsList = new TableView<ItemsBeans>();
     @FXML
     private Button savedItems;
     @FXML
@@ -110,6 +118,40 @@ public class ItemsController implements Initializable {
     private Label totalPriceAfterVat;
     @FXML
     private Label amount;
+    
+    
+    
+    /*
+     * Definition for the Tab Pane 
+     * We have three tab in that tab pane 
+     * 1. ADD New Order (Tab for the taking the order from the customer) 
+     * 2. Customer order (Tab for list of the customer)
+     * 3. Order history (Tab for the list of the items available in the store)
+     * 
+     */
+    
+    
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private Tab orderDetails;
+    @FXML
+    private Tab loadItems;
+    
+    
+    /*
+     * 
+     * Table definition for the items details .
+     * E.g when we are taking the order from the customer
+     * the at the click event we are adding the items in the 
+     * table . so this is the definition for that table; 
+     * Corresponding to that table six column definition
+     * 
+     */
+    
+    
+    
+    private TableView<ItemsBeans> itemsDetailsList = new TableView<ItemsBeans>();
     @FXML
     private TableColumn<ItemsBeans, Integer> seqNo;
     @FXML
@@ -127,10 +169,19 @@ public class ItemsController implements Initializable {
     
     
     
-    @FXML
-    private TabPane tabPane;
-    @FXML
-    private Tab orderDetails;
+    
+    /*
+     *	Table definition for the list of the customer who buy the items from the store
+     *  We are showing this details in second tab.
+     *  Corresponding to that table we have seven column definition
+     * 
+     * 
+     * 
+     */
+    
+    
+    
+    
     @FXML
     private TableView<LoadCustomerDetailsBeans> orderDetailsTable;
     @FXML
@@ -147,8 +198,26 @@ public class ItemsController implements Initializable {
     private TableColumn<LoadCustomerDetailsBeans, Double> odTotalPrice;
     @FXML
     private TableColumn<LoadCustomerDetailsBeans, Double> odDateTime;
-    @FXML
-    private Tab loadItems;
+  
+    
+    
+    
+    /*
+     * Table definition for the detail of the list of the item available in the store
+     * Details are :
+     * 	1. Item name
+     * 	2. Total number of item
+     *  3. Total number of the left item
+     *  4. Total number of the sell item
+     *  5. Price/Item
+     * Corresponding to that table we have six column definition
+     * 
+     * 
+     */
+    
+    
+    
+    
     @FXML
     private TableView<LoadOrderDetails> orderHistoryDetails = new TableView<LoadOrderDetails>();
     @FXML
@@ -169,27 +238,79 @@ public class ItemsController implements Initializable {
     
     
     
-    
+    /*
+     * Entity definition for the total price per single order
+     *  
+     */
     private double totalCalculatedPricePerOrder;
+    
+    
+    /*
+     * Entity definition for the total price/order 
+     * 
+     */
+    
+    
     private double totalCalculatedPrice;
+    
+    /*
+     * Entity definition for the total item sell in single order
+     * 
+     * 
+     */
+    
     private int sellItemCount = 0 ;
     /**
      * Initializes the controller class.
      */
+    
+    /*
+     * 
+     * Definition of the temporary cache.
+     * this cache will load the data from data source
+     * e.g item details, customer details etc.
+     * the cache will alive till the application will active in to system.
+     * 
+     * 
+     * */
     MyLRUCache lruCache;
+    
+    
+    /*
+     * 
+     * Definition for the different table (e.g HashTable in the cache) in the cache.
+     * 1. Item list 2. Item price 3. Number of items.. etc
+     * All these details coming from file (properties file )
+     * 
+     * */
     private ConcurrentHashMap<String, String> itemList;
     private ConcurrentHashMap<String, String> itemPrice;
     private ConcurrentHashMap<String, String> numberOfItem;
     private ConcurrentHashMap<String, String> numberOfItemsLeft;
     private ConcurrentHashMap<String, String> numberOfItemSell;
+    
+    
+    
     ObservableList<ItemsBeans> tableData = FXCollections.observableArrayList();
     ObservableList<LoadOrderDetails> renderOrderDetailsInTable ;
     ObservableList<LoadCustomerDetailsBeans> renderCustomerDetailsInTable = FXCollections.observableArrayList();
     private int count = 0;
+    
+    
+    
+    /*
+     * 
+     * Definition for the utilities class
+     * Utilities are 
+     * 1. Converting float to string
+     * 2. Converting date to string 
+     * 
+     */
     private Utilities utilities;
+    
     private DataPersist persist;
-    private final String RECORD_FILE_NAME = "customerRecord.properties";
-    private final String ITEMS_LISTFILE = "items.properties";
+    private final String RECORD_FILE_NAME = "DataSource/customerRecord.properties";
+    private final String ITEMS_LISTFILE = "DataSource/items.properties";
     ObservableList<ItemsBeans> item;
     private boolean isCommited;
     @Override
@@ -205,6 +326,16 @@ public class ItemsController implements Initializable {
     }    
 
    
+    
+    /*
+     * This method will add the order detail in to table in every click event or in every new order
+     * this method will invoke from the first tab 
+     * 
+     */
+    
+    
+    
+    
 	@FXML
     private void addDetailAction(ActionEvent event) {
     	String itemName = itemsList.getSelectionModel().getSelectedItem();
@@ -213,7 +344,16 @@ public class ItemsController implements Initializable {
     		count++;
     		ItemsBeans itemDetail = new ItemsBeans(count, itemName, (double)Double.parseDouble(pricePerItems.getText()), noOfItems, (double)Double.parseDouble(totalPrice.getText()),utilities.dateToStringUtil(new Date()),0.0);
     		tableData.add(itemDetail);
+    		
+    		/*This line will add every single order into grid this table is into first tab*/ 
     		itemsDetailsList.setItems(tableData);
+    		
+    		/*
+    		 * This line will maintain the temporary cache details for item
+    		 * 1. how may item is sell and how many item is left after complete
+    		 *  single order or total number of order given by customer
+    		 * 
+    		 * */
     		getNumberOfItemsLeft().put("NoOfItemLeft"+itemName, numberOfLeftItem.getText());
 			Integer temp = Integer.parseInt((String)getNumberOfItemSell().get("NoOfItemSell"+itemName));
 			getNumberOfItemSell().put("NoOfItemSell"+itemName, String.valueOf(noOfItems+temp));
@@ -221,6 +361,20 @@ public class ItemsController implements Initializable {
         
     }
 
+	
+	/*
+	 * 
+	 * The work of this method is to commit the order details for customer.
+	 *  and also maintain the number of available items in the store
+	 *  1. Number of item left
+	 *  2. number of item sell
+	 *  
+	 * 
+	 * */
+	
+	
+	
+	
     @FXML
     private void savedItemsAction(ActionEvent event) {
     	try{
@@ -244,6 +398,13 @@ public class ItemsController implements Initializable {
     	}
     }
 
+    
+    /*
+     * 
+     * This function will cancel the order 
+     * 
+     */
+    
     @FXML
     private void cancelOrderAction(ActionEvent event) {
     	try{

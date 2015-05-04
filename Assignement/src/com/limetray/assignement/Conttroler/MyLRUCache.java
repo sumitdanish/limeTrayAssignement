@@ -13,7 +13,7 @@ public class MyLRUCache {
 	private ConcurrentHashMap<String, String> numberOfItems;
 	private ConcurrentHashMap<String, String> numberOfItemsLeft;
 	private ConcurrentHashMap<String, String> numberOfItemSell;
-	private  String ITEMS_LISTFILE = "items.properties";
+	private  String ITEMS_LISTFILE = "DataSource/items.properties";
 	private  String ITEM_LISTS_KEY = "ItemList";
 	private  String ITEM_VAT_VALUE = "VAT";
 	private  String ITEM_SEPERATION_DELIMETER = ",";
