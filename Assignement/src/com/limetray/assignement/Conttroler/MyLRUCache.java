@@ -13,10 +13,10 @@ public class MyLRUCache {
 	private ConcurrentHashMap<String, String> numberOfItems;
 	private ConcurrentHashMap<String, String> numberOfItemsLeft;
 	private ConcurrentHashMap<String, String> numberOfItemSell;
-	private final String ITEMS_LISTFILE = "items.properties";
-	private final String ITEM_LISTS_KEY = "ItemList";
-	private final String ITEM_VAT_VALUE = "VAT";
-	private final String ITEM_SEPERATION_DELIMETER = ",";
+	private  String ITEMS_LISTFILE = "items.properties";
+	private  String ITEM_LISTS_KEY = "ItemList";
+	private  String ITEM_VAT_VALUE = "VAT";
+	private  String ITEM_SEPERATION_DELIMETER = ",";
 	private volatile static MyLRUCache myLRUCache;
 	private SimpleDoubleProperty vatValue;
 	private FileUtil fileUtil; 

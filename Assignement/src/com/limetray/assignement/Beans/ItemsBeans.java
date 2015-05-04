@@ -15,13 +15,13 @@ public class ItemsBeans {
 	private SimpleIntegerProperty noOfItemCo;
 	private SimpleDoubleProperty totalPriceCo;
 	private SimpleStringProperty dateTime;
-	
+	private SimpleDoubleProperty totalPriceInAllItems;
 	
 	
 	public ItemsBeans(int seqNoC,
 			String itemName, double itemPrice,
 			int noOfItems, double totalPrice,
-			String dateC) {
+			String dateC,double totalPriceInAllItemsC) {
 		super();
 		this.seqNo = new SimpleIntegerProperty(seqNoC);
 		this.itemNameCo = new SimpleStringProperty(itemName);
@@ -29,6 +29,19 @@ public class ItemsBeans {
 		this.noOfItemCo = new SimpleIntegerProperty(noOfItems);
 		this.totalPriceCo = new SimpleDoubleProperty(totalPrice);
 		this.dateTime = new SimpleStringProperty(dateC);
+		this.totalPriceInAllItems = new SimpleDoubleProperty(totalPriceInAllItemsC);
+	}
+
+
+
+	public Double getTotalPriceInAllItems() {
+		return totalPriceInAllItems.get();
+	}
+
+
+
+	public void setTotalPriceInAllItems(Double totalPriceInAllItemsC) {
+		totalPriceInAllItems.set(totalPriceInAllItemsC);
 	}
 
 

@@ -1,6 +1,8 @@
 package com.limetray.assignement.Conttroler;
 
 import com.limetray.assignement.Beans.ItemsBeans;
+import com.limetray.assignement.Beans.LoadCustomerDetailsBeans;
+import com.limetray.assignement.Beans.LoadOrderDetails;
 
 import javafx.collections.ObservableList;
 
@@ -43,6 +45,33 @@ public class DataPersist {
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+	
+	public void updatePrice(String fileName,ObservableList<LoadOrderDetails> items){
+		try{
+			fileUtil.updatePrice(fileName, items);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	
+	public ObservableList<LoadOrderDetails> loadOrderDetails(String fileName){
+		try{
+			return fileUtil.loadOrderDetails(fileName);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ObservableList<LoadCustomerDetailsBeans> loadCustomerDetails(String fileName){
+		try{
+			return fileUtil.loadCustomerDetails(fileName);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return null;
 	}
 	
 }
