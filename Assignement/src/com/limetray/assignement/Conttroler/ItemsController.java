@@ -150,7 +150,7 @@ public class ItemsController implements Initializable {
      */
     
     
-    
+    @FXML
     private TableView<ItemsBeans> itemsDetailsList = new TableView<ItemsBeans>();
     @FXML
     private TableColumn<ItemsBeans, Integer> seqNo;
@@ -381,15 +381,36 @@ public class ItemsController implements Initializable {
     		totalCalculatedPrice = 0.0;
     		totalCalculatedPricePerOrder = 0.0;
     		if(totalPriceAfterVat.getText() != null && !totalPriceAfterVat.getText().equals(null)){
+    			/*
+    			 * Here we are calculating the vat amount of the total price 
+    			 *  
+    			 */
+    			
     			calculateVat.setText("VAT Amount : "+utilities.floatToStringConversion((((float)Double.parseDouble(totalPriceAfterVat.getText())*
 						((float)Double.parseDouble(vatVal.getText().substring(vatVal.getText().indexOf(':')+1).trim())))/100)));
+    			
+    			/*
+    			 * Here we are calculating total amount to be paind by customer including the VAT amount 
+    			 */
     			totalCalculatedPrice = ((float)Double.parseDouble(totalPriceAfterVat.getText())+
 						((float)Double.parseDouble(calculateVat.getText().substring(calculateVat.getText().indexOf(':')+1).trim())));
     			amount.setText("Payble : "+utilities.floatToStringConversion(totalCalculatedPrice));
     		}
+    		
+    		/* In this line we are reading the complete data from the table (Table which is in the first tab)
+    		 * and storing in to file.
+    		 * 
+    		 * */
     		item = FXCollections.observableArrayList();
     		item = itemsDetailsList.getItems();
     		persist.saveData(item, RECORD_FILE_NAME,customerName.getText());
+    		
+    		/*
+    		 * after succesfuly storing the order details of the customer, we are storing the details
+    		 * (Details will be like, how many item is left/sell/total number of item
+    		 *  after storing the details into file) of the order in to file
+    		 *   
+    		 */
     		commitItemDetails(item);
     		isCommited = true;
     		successLabel.setText("Order is saved ! ");
@@ -423,6 +444,11 @@ public class ItemsController implements Initializable {
     	}
     	
     }
+    
+    /*
+     * In this line we are selecting the item name from combobox.when we are taking the order from customer 
+     * 
+     */
     @FXML
     private void selectItemName(ActionEvent event) {
     	try{
@@ -437,7 +463,18 @@ public class ItemsController implements Initializable {
     			for(int count = 1; count <= Integer.parseInt(getNumberOfItem().get("NoOfItem"+itemName));count++){
     				numOfItemList.add(count);
     			}
+    			
+    			/*
+    			 * In this line we are showing the price of the item.
+    			 * when user will select the item. the price will get display according to that
+    			 * 
+    			 * */
     			numberOfItems.setItems(numOfItemList);
+    			
+    			/*
+    			 * In this line we are converting double to string for two decimal places.
+    			 * 
+    			 * */
     			pricePerItems.setText(utilities.floatToStringConversion((float)Double.parseDouble((String)getItemPrice().get(itemName+"ItemPrice"))));
     			numOfItemList = null;
     		}
@@ -446,18 +483,57 @@ public class ItemsController implements Initializable {
     	}
     }
 
+    
+    /*
+     * Here we are selecting the number of item from combobox. which should be placed once in a order
+     * after selecting the number of item. we are calculating the price of total item.
+     * 
+     */
+    
+    
     @FXML
     private void selectItemPrice(ActionEvent event) {
     	try{
     		String itemName = itemsList.getSelectionModel().getSelectedItem();
     		Integer noOfItems = numberOfItems.getSelectionModel().getSelectedItem();  
     		if(itemName != null && !itemName.equals("") && noOfItems != null && noOfItems != 0){
+    			
+    			/*
+    			 * Here we are converting the float to string for displaying the price till two decimal place. 
+    			 * 
+    			 */
+    			
+    			
+    			
     			totalPrice.setText(utilities.floatToStringConversion((Double.parseDouble(pricePerItems.getText())*noOfItems)));
+    			
+    			/*
+    			 * Here we are calculating the total number of item to be order/sell at time or per customer
+    			 * 
+    			 * */
+    			
     			sellItemCount+=noOfItems+((numberOfSellItems.getText() !=null && !numberOfSellItems.getText().equals(""))? Integer.parseInt(numberOfSellItems.getText()) : 0);
     			numberOfSellItems.setText(String.valueOf(noOfItems));
     			sellItems.setText(String.valueOf(sellItemCount));
+    			
+    			
+    			/*
+    			 * Here we are calculating the price per order. more than one order can be made by a customer
+    			 * and every order by customer we are displaying int to table (which is in first tab) 
+    			 * 
+    			 */
+    			
+    			
+    			
     			totalCalculatedPricePerOrder+=(totalPrice.getText() != null && !totalPrice.getText().equals("")) ? Double.parseDouble(totalPrice.getText()) : 0.0;
     			totalPriceAfterVat.setText(utilities.floatToStringConversion(totalCalculatedPricePerOrder));
+    			
+    			
+    			/*
+    			 *  Here we are maintaining the total number of a particular item is left in to store.
+    			 *   
+    			 * 
+    			 */
     			numberOfLeftItem.setText(String.valueOf((Integer.parseInt((String)getNumberOfItemsLeft().get("NoOfItemLeft"+itemName)) - (noOfItems))));
     			leftItem.setText(itemName);
     		}
@@ -466,6 +542,15 @@ public class ItemsController implements Initializable {
     		ex.printStackTrace();
     	}
     }
+    
+    
+    
+    /*
+     * Here we are reading the details of the item from temp cache 
+     * 
+     */
+    
+    
     public void init(){
     	try{
     		lruCache = MyLRUCache.getMyLRUCache();
@@ -511,6 +596,12 @@ public class ItemsController implements Initializable {
     		  ohTotalSellItems.setCellValueFactory(new PropertyValueFactory<LoadOrderDetails, Integer>("ohTotalSellItems"));
     		  ohTotalLeftItems.setCellValueFactory(new PropertyValueFactory<LoadOrderDetails, Integer>("ohTotalLeftItems"));
     		  odPricePerItem.setCellValueFactory(new PropertyValueFactory<LoadOrderDetails, Double>("odPricePerItem"));
+    		  
+    		  
+    		  /*
+    		   * Here we are making one column (price) editable in table which is in third tab.
+    		   * 
+    		   */
     		  odPricePerItem.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
 				@Override
 				public Double fromString(String string) {
@@ -623,6 +714,13 @@ public class ItemsController implements Initializable {
     
     
     
+    /*
+     * Here we are rollbacking the item details.
+     * suppose some customer cancel the order then we want to maintain the details of the order into cache.
+     * 
+     * */
+    
+    
     public void rollbackItemsDetails(ObservableList<ItemsBeans> items){
     	try{
     		for(ItemsBeans item : items){
@@ -653,6 +751,12 @@ public class ItemsController implements Initializable {
     
     
     
+    /*
+     * Here we are loading the items details from the file showing into third tab
+     * 
+     * 
+     */
+    
    
     public void loadOrderDetals(){
     	try{
@@ -666,6 +770,11 @@ public class ItemsController implements Initializable {
     }
     
     
+    /*
+     * Here we are loading customer details from the file and displaying into 2nd tab
+     * 
+     * */
+    
     public void loadCustomerOrderDetails(){
     	try{
     		initCustomerDetailsView();
@@ -678,6 +787,12 @@ public class ItemsController implements Initializable {
     }
     
    
+    /*
+     * 
+     * Here when we will select the tab then on select event we are
+     *  loading the details i.e either customer details or items details
+     * 
+     * */
     
     public ChangeListener<Tab> tabPaneChangeListener(){
     	try{
