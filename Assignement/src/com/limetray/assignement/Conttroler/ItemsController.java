@@ -656,6 +656,7 @@ public class ItemsController implements Initializable {
     		totalPriceCo.setCellValueFactory(new PropertyValueFactory<ItemsBeans,Double>("totalPriceCo"));
     		dateTime.setCellValueFactory(new PropertyValueFactory<ItemsBeans,String>("dateTime"));
     		itemsDetailsList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    		
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}

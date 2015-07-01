@@ -48,7 +48,8 @@ public class Utilities {
 	    		float totalPriceInFloat = (float) totalPrice;
 	    		String totalPriceFromFloatToString = df2.format(totalPriceInFloat);
 	    		totalPriceFromFloatToString = totalPriceFromFloatToString.substring(totalPriceFromFloatToString.indexOf('.')+1).length() == 1?
-	    									  (totalPriceFromFloatToString.substring(0,totalPriceFromFloatToString.indexOf('.'))+"."+totalPriceFromFloatToString.substring(totalPriceFromFloatToString.indexOf('.')+1)+String .valueOf('0')):
+	    									  (totalPriceFromFloatToString.substring(0,totalPriceFromFloatToString.indexOf('.'))+"."+
+	    											  totalPriceFromFloatToString.substring(totalPriceFromFloatToString.indexOf('.')+1)+String .valueOf('0')):
 	    										  totalPriceFromFloatToString;
 	    		return totalPriceFromFloatToString;
 	    		

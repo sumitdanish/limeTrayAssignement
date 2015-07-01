@@ -13,6 +13,7 @@ import javafx.stage.StageStyle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import com.aquafx_project.*;
 
 
 public class Main extends Application {
@@ -25,10 +26,10 @@ public class Main extends Application {
 			LoginController l = new LoginController();
 			Parent  root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
 			//primaryStage.initStyle(StageStyle.TRANSPARENT);
+			AquaFx.style();
 			Scene scene = new Scene(root);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			//scene.getStylesheets().add(getClass().getResource("/fxml/fx.css").toExternalForm());
 			primaryStage.setScene(scene);
-			
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

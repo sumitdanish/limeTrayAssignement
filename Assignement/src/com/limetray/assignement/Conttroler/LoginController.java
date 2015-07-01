@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.aquafx_project.AquaFx;
 import com.limetray.assignement.PanelView.ItemsPanel;
 
 import javafx.beans.value.ChangeListener;
@@ -22,9 +23,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -32,55 +35,61 @@ import javafx.stage.Stage;
  * @author ADMIN
  */
 public class LoginController implements Initializable {
-    @FXML
-    private Font x1;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private TextField emailId;
-    @FXML
-    private Button signInButton;
-    @FXML
-    private Font x2;
-    @FXML
-    private Button cancelButton;
-    @FXML
-    private ProgressIndicator sinInPprogressIndicator;
-    @FXML
-    private Label errorLabel;
-    
-    final Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+	@FXML
+	private Font x1;
+	@FXML
+	private PasswordField password;
+	@FXML
+	private TextField emailId;
+	@FXML
+	private Button signInButton;
+	@FXML
+	private Font x2;
+	@FXML
+	private Button cancelButton;
+	@FXML
+	private ProgressIndicator sinInPprogressIndicator;
+	@FXML
+	private Label errorLabel;
 
-    @FXML
-    public Exception validateLogin(ActionEvent event) throws Exception {
-    	try{
-    		Rectangle ge = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+	final Rectangle2D primaryScreenBounds = Screen.getPrimary()
+			.getVisualBounds();
+
+	/**
+	 * Initializes the controller class.
+	 */
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		// TODO
+	}
+
+	@FXML
+	public Exception validateLogin(ActionEvent event) throws Exception {
+		try {
+			Rectangle ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
+					.getMaximumWindowBounds();
 			double width = ge.getWidth();
 			double hight = ge.getHeight();
-    		Stage stage = null;
-    		stage = (Stage)signInButton.getScene().getWindow();
-    		Parent  root = new ItemsPanel().getItemsPanel();
-    		
-    		Scene sc = new Scene(root,width/2,hight/2);
-    		stage.setScene(sc);
-    		stage.setX(0);
-    		stage.setY(0);
-    		stage.show();
-    		return null;
-    	}catch(Exception ex){
-    		throw ex;
-    	}
-    }
+			Stage stage = null;
+			stage = (Stage) signInButton.getScene().getWindow();
 
-    @FXML
-    private void conntrolerMethod(ActionEvent event) {
-    }
-    
+			Parent root = new ItemsPanel().getItemsPanel();
+
+			Scene sc = new Scene(root, width / 2, hight / 2);
+			stage.setScene(sc);
+			stage.setX(0);
+			stage.setY(0);
+			AquaFx.setGroupBox((Pane)(root));
+			// AquaFx.styleStage(stage, StageStyle.UNDECORATED);
+			stage.show();
+			return null;
+		} catch (Exception ex) {
+			throw ex;
+		}
+	}
+
+	@FXML
+	private void conntrolerMethod(ActionEvent event) {
+	}
+
 }
